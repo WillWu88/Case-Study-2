@@ -1,0 +1,17 @@
+git pull && git fetch
+%pull the latest changes and branches from github
+
+git status
+%shows you what's changed
+
+git add .
+%adds all changed files into the staging area
+
+git add filename.m
+%adds a specific file to the staging area
+
+git commit -m "commit message"
+% commits the changes and adds the commit message
+
+git push
+% pushes the changes to the cloud
