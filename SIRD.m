@@ -23,9 +23,15 @@ umNYC = [0.85 0.05 0 0; 0.15 0.8 0 0; 0 0.05 1 0; 0 0.1 0 1];
 umBJC = [0.6 0.1 0 0; 0.4 0.6 0 0; 0 0.1 1 0; 0 0.2 0 1];
 
 % below 
-travel_rate = [3sy];
+sTravel_rate = [0 0.02 0.01; 0.03 0 0.05; 0.06 0.04 0];
+iTravel_rate = [0 0.01 0; 0.08 0 0; 0 0 0];
+rTravel_rate = [0 0.01 0.01; 0.01 0 0.01; 0.01 0.01 0];
+Travel_rate = cat(3, sTravel_rate, iTravel_rate, rTravel_rate);
+% Travel_rate is a 3*3*3 matrix, first layer for s, second for i, third for r
+% each entry, Tij, denotes the travelling rate from city i to city j
 
 genUMISO = genMultiUpdateISO(umSTL, umNYC, umBJC);
+genUMCON = genMultiUpdateCON(umSTL, umNYC, umBJC, Travel_rate);
 
 xt_temp = num2cell(xt);
 [sSTL(1), iSTL(1), rSTL(1), dSTL(1)] = deal(xt_temp{:});
@@ -60,5 +66,16 @@ function updateMatrix = genMultiUpdateISO(umCity1, umCity2, umCity3)
 end
 
 function updateMatrix = genMultiUpdateCON(umCity1, umCity2, umCity3, trIncidence)
-    
+    % takes the update matrices for the three cities and the travel rate matrix
+    % given that travel is allowed, generate a 12*12 update matrix
+    % assume trIncidence is 3*3*3, first layer for s, second for i, third for r
+    isoUM = genMultiUpdateISO(umCity1, umCity2, umCity3);
+    [r, c, l] = size(trIncidence);
+    for layerIndex = 1:l
+        for cIndex = 1:c
+            for rIndex = 1:r
+                isoUM(r,c) = isoUM(r,c) - 
+            end
+        end
+    end
 end
