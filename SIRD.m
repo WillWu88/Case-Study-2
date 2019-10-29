@@ -71,11 +71,24 @@ function updateMatrix = genMultiUpdateCON(umCity1, umCity2, umCity3, trIncidence
     % assume trIncidence is 3*3*3, first layer for s, second for i, third for r
     isoUM = genMultiUpdateISO(umCity1, umCity2, umCity3);
     [r, c, l] = size(trIncidence);
-    for layerIndex = 1:l
-        for cIndex = 1:c
-            for rIndex = 1:r
-                isoUM(r,c) = isoUM(r,c) - 
+    for layerIndex = 1:l % cycling through three category
+        for rindex = 1:r
+           for cindex = 1:c
+            if rindex == cindex
+                index = 4*cindex+layerIndex-4;
+                entry = isoUM(index, index) - sum(trIncidence(rindex,:,layerIndex));
+                isoUM(index, index) = entry;
+            else
+                row = 4*rindex+layerIndex-4;
+                column = 4*cindex+layerIndex-4;
+                isoUM(row, column) = isoUM(row, column) + trIncidence(cindex, rindex, layerIndex);
+                % flipped cindex and rindex, since the loop is looping through 
+                % rows then columns, but the filling order should be columns
+                % then rows
+                
             end
+           end
         end
     end
+    updateMatrix = isoUM;
 end
