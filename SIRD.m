@@ -2,7 +2,7 @@
 xt = [1; 0; 0; 0];
 updateMatrix = [0.95 0.04 0 0; 0.05 0.85 0 0; 0 0.1 1 0; 0 0.01 0 1];
 max_iter = 500;
-time_series = 1:max_iter
+time_series = 1:max_iter;
 
 susceptible = zeros(max_iter, 1);
 infected = zeros(max_iter, 1);
@@ -26,6 +26,8 @@ plot(time_series, infected);
 plot(time_series, recovered);
 plot(time_series, dead);
 legend('Susceptible','Infected','Recovered','Dead');
+hold off;
+
 
 function xtPlusOne = update_xt(updateMatrix, xt)
 % takes two arguments: an update matrix and a target matrix
