@@ -27,7 +27,7 @@ umBJC = [0.6 0.1 0 0; 0.4 0.6 0 0; 0 0.1 1 0; 0 0.2 0 1];
 % below
 sTravel_rate = [0 0.02 0.01; 0.03 0 0.05; 0.06 0.04 0];
 iTravel_rate = [0 0.01 0; 0.08 0 0; 0 0 0];
-rTravel_rate = [0 0.01 0.01; 0.01 0 0.01; 0.01 0.01 0];
+rTravel_rate = zeros(3,3);
 Travel_rate = cat(3, sTravel_rate, iTravel_rate, rTravel_rate);
 % Travel_rate is a 3*3*3 matrix, first layer for s, second for i, third for r
 % each entry, Tij, denotes the travelling rate from city i to city j
@@ -112,15 +112,14 @@ function updateMatrix = genMultiUpdateCON(umCity1, umCity2, umCity3, trIncidence
 end
 
 function plotMultipleSIRD(city1, city2, city3, time_series, plot_label)
-    figure();
-    title(plot_label);
+    figure('Name',plot_label);
     subplot(3, 1, 1);
     hold on;
     plot(time_series, city1(:,1));
     plot(time_series, city1(:,2));
     plot(time_series, city1(:,3));
     plot(time_series, city1(:,4));
-    title(city1);
+    title('city1');
     legend('Susceptible', 'Infected', 'Recovered', 'Dead');
     hold off;
 
@@ -130,7 +129,7 @@ function plotMultipleSIRD(city1, city2, city3, time_series, plot_label)
     plot(time_series, city2(:,2));
     plot(time_series, city2(:,3));
     plot(time_series, city2(:,4));
-    title('SIRD Plot 2 over 500 iterations');
+    title('city2');
     legend('Susceptible', 'Infected', 'Recovered', 'Dead');
     hold off;
 
@@ -140,7 +139,7 @@ function plotMultipleSIRD(city1, city2, city3, time_series, plot_label)
     plot(time_series, city3(:,2));
     plot(time_series, city3(:,3));
     plot(time_series, city3(:,4));
-    title('SIRD Plot 3 over 500 iterations');
+    title('city3');
     legend('Susceptible', 'Infected', 'Recovered', 'Dead');
     hold off;
 end
